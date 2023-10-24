@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.producto {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+ul#lista-carrito {
+    padding-left: 0;
+}
+
+ul#lista-carrito li {
+    list-style-type: none;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+ul#lista-carrito {
+    padding-left: 0;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+ul#lista-carrito li {
+    list-style-type: none;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+/* ... (estilos anteriores) ... */
+
+#lista-carrito {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.floating-cart {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#count-carrito-mobile {
+    padding: 10px 15px;
+    font-size: 1.2em;
+}
+
+
+.card-img-top {
+    height: 150px; /* o el tamaño que desees */
+    object-fit: cover; /* para mantener la proporción de la imagen */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* para que ocupe todo el espacio vertical disponible */
+}
