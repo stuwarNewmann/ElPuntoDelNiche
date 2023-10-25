@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         actualizarCarrito();
         actualizarContadorCarrito();
+        guardarCarritoEnLocalStorage();
     }
 
     function incrementar(id) {
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             producto.cantidad++;
             actualizarCarrito();
             actualizarContadorCarrito();
+            guardarCarritoEnLocalStorage();
         }
     }
 
@@ -55,17 +57,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const producto = carrito.find(p => p.id === id);
         if (producto && producto.cantidad > 1) {
             producto.cantidad--;
+            actualizarCarrito();
+            actualizarContadorCarrito();
+            guardarCarritoEnLocalStorage();
         } else if (producto.cantidad === 1) {
-            carrito = carrito.filter(p => p.id !== id);
+            eliminar(id);
         }
-        actualizarCarrito();
-        actualizarContadorCarrito();
     }
 
     function eliminar(id) {
         carrito = carrito.filter(p => p.id !== id);
         actualizarCarrito();
         actualizarContadorCarrito();
+        guardarCarritoEnLocalStorage();
     }
 
     function actualizarContadorCarrito() {
@@ -75,17 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function enviarAWhatsApp() {
         const barrio = barrioInput.value;
+
+        if (!barrio.trim()) {
+            alert("Por favor, introduce tu dirección y barrio.");
+            return;
+        }
+
         let mensaje = `Hola, quiero hacer un pedido:\n`;
     
         carrito.forEach(producto => {
             mensaje += `${producto.nombre} - $${producto.precio} x ${producto.cantidad}\n`;
         });
     
-        mensaje += `Domicilio en el barrio: ${barrio}`;
+        mensaje += `Domicilio en: ${barrio}`;
     
         const numeroWhatsApp = "3053053651";
         const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensaje)}`;
         window.open(urlWhatsApp, '_blank');
+
+        eliminarCarritoDeLocalStorage();
     }
 
     function showModal() {
@@ -132,29 +144,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
-    productos.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const card = e.target.closest('.card');
-            card.classList.add('scale-animation'); // Añadir animación
-    
-            setTimeout(() => {
-                card.classList.remove('scale-animation');
-            }, 500); // Remover la animación después de 500ms
-    
-            const id = btn.getAttribute('data-id');
-            const nombre = btn.getAttribute('data-nombre');
-            const precio = parseFloat(btn.getAttribute('data-precio'));
-            agregarAlCarrito({ id, nombre, precio });
-        });
-    });
-    
-    
-    
-    
-    
+    function guardarCarritoEnLocalStorage() {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
 
-    // Evento para mostrar el modal cuando se haga clic en la burbuja flotante o en el botón "Comprar"
+    function cargarCarritoDeLocalStorage() {
+        const carritoGuardado = localStorage.getItem('carrito');
+        if (carritoGuardado) {
+            carrito = JSON.parse(carritoGuardado);
+            actualizarCarrito();
+            actualizarContadorCarrito();
+        }
+    }
+
+    function eliminarCarritoDeLocalStorage() {
+        localStorage.removeItem('carrito');
+    }
+
+    cargarCarritoDeLocalStorage();
+
     [countCarritoMobile, comprarBtn].forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
