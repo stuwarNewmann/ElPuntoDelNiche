@@ -60,3 +60,78 @@ ul#lista-carrito li {
     justify-content: space-between;
     height: 100%; /* para que ocupe todo el espacio vertical disponible */
 }
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-group-item > div {
+    display: flex;
+    align-items: center;
+}
+
+.list-group-item button {
+    margin: 0 5px;
+}
+
+/* Efecto de transición para las tarjetas y botones */
+.transition-effect {
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover para las tarjetas */
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Estilo para los botones de agregar al carrito */
+.agregar {
+    border: none;
+    background-color: #ffc107;
+    color: #333;
+}
+
+.agregar:hover {
+    background-color: #ffcc00;
+    color: #222;
+}
+
+/* Estilo para el carrito */
+#lista-carrito {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Estilo para el modal */
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.modal-footer {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+/* Animación sutil de escala */
+@keyframes scalePulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scale-animation {
+    animation: scalePulse 0.5s ease-in-out;
+}
